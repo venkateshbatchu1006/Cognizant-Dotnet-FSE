@@ -1,0 +1,30 @@
+class Employee:
+    def __init__(self, employee_id: str, name: str, position: str, salary: float):
+        self.employee_id = employee_id
+        self.name = name
+        self.position = position
+        self.salary = salary
+
+class EmployeeManagement:
+    def __init__(self):
+        self.employees = []
+
+    def add(self, emp: Employee):
+        self.employees.append(emp)
+
+    def search(self, emp_id: str) -> Employee:
+        for emp in self.employees:
+            if emp.employee_id == emp_id:
+                return emp
+        return None
+
+    def traverse(self):
+        for emp in self.employees:
+            print(f"{emp.name} - {emp.position}")
+
+    def delete(self, emp_id: str) -> bool:
+        for i, emp in enumerate(self.employees):
+            if emp.employee_id == emp_id:
+                self.employees.pop(i)
+                return True
+        return False

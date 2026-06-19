@@ -1,0 +1,43 @@
+from abc import ABC, abstractmethod
+
+class Document(ABC):
+    def open(self):
+        pass
+
+class WordDocument(Document):
+    def open(self):
+        print("Opening Word Document...")
+
+class PdfDocument(Document):
+    def open(self):
+        print("Opening PDF Document...")
+
+class ExcelDocument(Document):
+    def open(self):
+        print("Opening Excel Document...")
+
+class DocumentFactory(ABC):
+    @abstractmethod
+    def create_document(self) -> Document:
+        pass
+
+class WordDocumentFactory(DocumentFactory):
+    def create_document(self) -> Document:
+        return WordDocument()
+
+class PdfDocumentFactory(DocumentFactory):
+    def create_document(self) -> Document:
+        return PdfDocument()
+
+class ExcelDocumentFactory(DocumentFactory):
+    def create_document(self) -> Document:
+        return ExcelDocument()
+
+if __name__ == "__main__":
+    pdf_factory = PdfDocumentFactory()
+    my_pdf = pdf_factory.create_document()
+    my_pdf.open()
+
+    word_factory = WordDocumentFactory()
+    my_word = word_factory.create_document()
+    my_word.open()

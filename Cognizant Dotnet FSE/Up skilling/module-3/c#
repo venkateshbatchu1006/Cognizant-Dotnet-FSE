@@ -1,0 +1,87 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web;
+
+class Program
+{
+    static async Task Main()
+    {
+        Console.WriteLine("Hello World!");
+
+        int v = 10; Custom c = new() { Val = 10 };
+        v = 99; c.Val = 99;
+
+        P p = new("John", 30);
+        
+        var i = 5; string s = new("Inference");
+
+        string g = 85 switch { >= 90 => "A", >= 80 => "B", _ => "F" };
+
+        foreach (var x in new int[] { 1, 2, 3 }) { if (x == 2) continue; }
+
+        int Add(int a, int b) => a + b;
+
+        void Mod(ref int r, out int o, in int ip) { r = 1; o = 2; }
+
+        long Fact(int n) => n <= 1 ? 1 : n * Fact(n - 1);
+
+        Car car = new("Toyota");
+
+        Derived d = new();
+
+        Prod prod = new() { Price = -5 };
+
+        Emp e1 = new { Id = 1, Name = "Alice" };
+
+        Shape sh = new Circle(); sh.Draw();
+
+        CarV cv = new(); cv.Start(); cv.Drive();
+
+        string? n = null; string dn = n ?? "Anon";
+
+        Contact cn = new() { Name = "Charlie" };
+
+        Stud st = new() { Id = 1, Name = "Emma" };
+
+        List<string> l = new() { "A" }; Dictionary<int, string> dict = new() { { 1, "O" } };
+
+        var items = new[] { new { Amt = 150 } }.Where(x => x.Amt > 100);
+
+        if ("test" is string txt) {}
+
+        var (id, status) = (200, "OK");
+
+        await Task.Delay(10);
+
+        string json = JsonSerializer.Serialize(new { Name = "A" });
+
+        using (MemoryStream ms = new()) { ms.Write([1, 2], 0, 2); }
+
+        lock (new object()) {}
+
+        bool acq = false; Monitor.TryEnter(new object(), 10, ref acq);
+
+        System.Diagnostics.Trace.WriteLine("Log");
+
+        string clean = HttpUtility.HtmlEncode("<script>");
+    }
+
+    class Custom { public int Val { get; set; } }
+    class P(string n, int a) { public string Name = n; }
+    class Car(string m) { public string Make = m; }
+    class Base { protected int x = 1; }
+    class Derived : Base {}
+    class Prod { private double p; public double Price { get => p; set => p = value < 0 ? 0 : value; } }
+    class Shape { public virtual void Draw() {} }
+    class Circle : Shape { public override void Draw() {} }
+    abstract class Veh { public abstract void Drive(); }
+    interface IDrive { void Start(); }
+    class CarV : Veh, IDrive { public void Start() {} public override void Drive() {} }
+    class Contact { public string? Name; }
+    class Stud { public required int Id; public required string Name; }
+}

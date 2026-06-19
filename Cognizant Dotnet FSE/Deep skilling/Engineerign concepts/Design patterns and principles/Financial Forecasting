@@ -1,0 +1,14 @@
+class FinancialForecasting:
+    def calculate_future_value(present_value: float, growth_rate: float, years: int) -> float:
+        if years == 0:
+            return present_value
+        return FinancialForecasting.calculate_future_value(
+            present_value * (1 + growth_rate), growth_rate, years - 1
+        )
+
+if __name__ == "__main__":
+    pv = 1000.0
+    rate = 0.05
+    terms = 10
+    fv = FinancialForecasting.calculate_future_value(pv, rate, terms)
+    print(f"Future Value: {fv:.2f}")

@@ -1,0 +1,59 @@
+from abc import ABC, abstractmethod
+
+class Observer(ABC):
+    @abstractmethod
+    def update(self, stock_symbol: str, price: float):
+        pass
+
+class Stock(ABC):
+    def register(self, o: Observer):
+        pass
+
+    def deregister(self, o: Observer):
+        pass
+
+    def notify_observers(self):
+        pass
+
+class StockMarket(Stock):
+    def __init__(self):
+        self._observers = []
+        self._stock_symbol = None
+        self._price = None
+
+    def register(self, o: Observer):
+        self._observers.append(o)
+
+    def deregister(self, o: Observer):
+        self._observers.remove(o)
+
+    def notify_observers(self):
+        for observer in self._observers:
+            observer.update(self._stock_symbol, self._price)
+
+    def set_stock_data(self, stock_symbol: str, price: float):
+        self._stock_symbol = stock_symbol
+        self._price = price
+        self.notify_observers()
+
+class MobileApp(Observer):
+    def update(self, stock_symbol: str, price: float):
+        print(f"Mobile App Push Notification: {stock_symbol} has moved to ${price}")
+
+class WebApp(Observer):
+    def update(self, stock_symbol: str, price: float):
+        print(f"Web Dashboard Grid Sync: {stock_symbol} ticker price is now ${price}")
+
+if __name__ == "__main__":
+    nasdaq = StockMarket()
+    iphone_app = MobileApp()
+    web_portal = WebApp()
+
+    nasdaq.register(iphone_app)
+    nasdaq.register(web_portal)
+
+    print("--- Pushing first market modification data ---")
+    nasdaq.set_stock_data("GOOGL", 182.50)
+    print("\n--- Deregistering MobileApp component layer ---")
+    nasdaq.deregister(iphone_app)
+    nasdaq.set_stock_data("AMZN", 185.10)

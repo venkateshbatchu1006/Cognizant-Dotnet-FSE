@@ -1,0 +1,28 @@
+class Book:
+    def __init__(self, book_id: str, title: str, author: str):
+        self.book_id = book_id
+        self.title = title
+        self.author = author
+
+class LibraryManagement:
+    def linear_search_by_title(books: list, title: str) -> Book:
+        for book in books:
+            if book.title.lower() == title.lower():
+                return book
+        return None
+    def binary_search_by_title(sorted_books: list, title: str) -> Book:
+        low = 0
+        high = len(sorted_books) - 1
+        target_title = title.lower()
+
+        while low <= high:
+            mid = low + (high - low) // 2
+            mid_title = sorted_books[mid].title.lower()
+
+            if mid_title == target_title:
+                return sorted_books[mid]
+            elif mid_title < target_title:
+                low = mid + 1
+            else:
+                high = mid - 1
+        return None

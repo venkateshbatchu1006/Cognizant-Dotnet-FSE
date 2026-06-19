@@ -1,0 +1,33 @@
+from abc import ABC, abstractmethod
+
+class PaymentProcessor(ABC):
+    def process_payment(self, amount: float):
+        pass
+
+class PayPalGateway:
+    def make_paypal_payment(self, dollars: float):
+        print(f"Processing ${dollars} securely via PayPal API.")
+
+class StripeGateway:
+    def charge_card(self, amount_in_usd: float):
+        print(f"Charging Stripe credit card gateway: ${amount_in_usd}")
+
+class PayPalAdapter(PaymentProcessor):
+    def __init__(self, paypal_gateway: PayPalGateway):
+        self.paypal_gateway = paypal_gateway
+
+    def process_payment(self, amount: float):
+        self.paypal_gateway.make_paypal_payment(amount)
+
+class StripeAdapter(PaymentProcessor):
+    def __init__(self, stripe_gateway: StripeGateway):
+        self.stripe_gateway = stripe_gateway
+
+    def process_payment(self, amount: float):
+        self.stripe_gateway.charge_card(amount)
+
+if __name__ == "__main__":
+    processor1 = PayPalAdapter(PayPalGateway())
+    processor2 = StripeAdapter(StripeGateway())
+    processor1.process_payment(150.00)
+    processor2.process_payment(45.50)

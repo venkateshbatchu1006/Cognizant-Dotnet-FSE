@@ -1,0 +1,25 @@
+import threading
+
+class Logger:
+    _instance = None
+    _lock = threading.Lock()
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            with cls._lock:
+                if not cls._instance:
+                    cls._instance = super().__new__(cls)
+        return cls._instance
+
+    def log(self, message: str):
+        print(f"[LOG]: {message}")
+
+if __name__ == "__main__":
+    logger1 = Logger()
+    logger2 = Logger()
+    logger1.log("Testing first log statement.")
+    logger2.log("Testing second log statement.")
+    if logger1 is logger2:
+        print("SUCCESS: Both variables refer to the same Logger instance.")
+    else:
+        print("FAILURE: Multiple Logger instances exist.")

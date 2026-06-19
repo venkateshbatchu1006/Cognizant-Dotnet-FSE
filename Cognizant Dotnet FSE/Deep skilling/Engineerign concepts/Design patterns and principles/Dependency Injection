@@ -1,0 +1,22 @@
+from abc import ABC, abstractmethod
+
+class CustomerRepository(ABC):
+    def find_customer_by_id(self, customer_id: str) -> str:
+        pass
+
+class CustomerRepositoryImpl(CustomerRepository):
+    def find_customer_by_id(self, customer_id: str) -> str:
+        return f"Customer: John Doe (ID: {customer_id})"
+
+class CustomerService:
+    def __init__(self, repository: CustomerRepository):
+        self._repository = repository
+
+    def get_customer_details(self, customer_id: str):
+        data = self._repository.find_customer_by_id(customer_id)
+        print(f"Service Output processing: {data}")
+
+if __name__ == "__main__":
+    db_source = CustomerRepositoryImpl()
+    service = CustomerService(db_source)
+    service.get_customer_details("CUST-1025")

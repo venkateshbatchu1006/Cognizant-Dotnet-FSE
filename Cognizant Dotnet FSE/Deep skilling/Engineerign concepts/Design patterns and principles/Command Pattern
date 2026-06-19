@@ -1,0 +1,48 @@
+from abc import ABC, abstractmethod
+
+class Command(ABC):
+    def execute(self):
+        pass
+
+class Light:
+    def turn_on(self):
+        print("The living room lighting grid is turned ON.")
+
+    def turn_off(self):
+        print("The living room lighting grid is turned OFF.")
+
+class LightOnCommand(Command):
+    def __init__(self, light: Light):
+        self.light = light
+
+    def execute(self):
+        self.light.turn_on()
+
+class LightOffCommand(Command):
+    def __init__(self, light: Light):
+        self.light = light
+
+    def execute(self):
+        self.light.turn_off()
+
+class RemoteControl:
+    def __init__(self):
+        self._slot = None
+
+    def set_command(self, command: Command):
+        self._slot = command
+
+    def press_button(self):
+        if self._slot:
+            self._slot.execute()
+
+if __name__ == "__main__":
+    living_room_light = Light()
+    switch_on = LightOnCommand(living_room_light)
+    switch_off = LightOffCommand(living_room_light)
+
+    remote = RemoteControl()
+    remote.set_command(switch_on)
+    remote.press_button()
+    remote.set_command(switch_off)
+    remote.press_button()

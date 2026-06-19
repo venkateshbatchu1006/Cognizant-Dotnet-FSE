@@ -1,0 +1,54 @@
+class Task:
+    def __init__(self, task_id: str, task_name: str, status: str):
+        self.task_id = task_id
+        self.task_name = task_name
+        self.status = status
+
+class Node:
+    def __init__(self, task: Task):
+        self.task = task
+        self.next = None
+
+class TaskManagement:
+    def __init__(self):
+        self.head = None
+
+    def add(self, task: Task):
+        new_node = Node(task)
+        if not self.head:
+            self.head = new_node
+        else:
+            temp = self.head
+            while temp.next:
+                temp = temp.next
+            temp.next = new_node
+
+    def search(self, task_id: str) -> Task:
+        temp = self.head
+        while temp:
+            if temp.task.task_id == task_id:
+                return temp.task
+            temp = temp.next
+        return None
+
+    def traverse(self):
+        temp = self.head
+        while temp:
+            print(f"{temp.task.task_name} [{temp.task.status}]")
+            temp = temp.next
+
+    def delete(self, task_id: str) -> bool:
+        if not self.head:
+            return False
+
+        if self.head.task.task_id == task_id:
+            self.head = self.head.next
+            return True
+
+        current = self.head
+        while current.next:
+            if current.next.task.task_id == task_id:
+                current.next = current.next.next
+                return True
+            current = current.next
+        return False

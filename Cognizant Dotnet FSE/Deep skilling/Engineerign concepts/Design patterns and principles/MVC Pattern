@@ -1,0 +1,42 @@
+class Student:
+    def __init__(self, student_id: str, name: str, grade: str):
+        self.id = student_id
+        self.name = name
+        self.grade = grade
+
+class StudentView:
+    def display_student_details(self, student_name: str, student_id: str, student_grade: str):
+        print("=== STUDENT DISPLAY CANVAS ===")
+        print(f"Identification Code: {student_id}")
+        print(f"Full Name: {student_name}")
+        print(f"Performance Evaluation Grade: {student_grade}")
+
+class StudentController:
+    def __init__(self, model: Student, view: StudentView):
+        self._model = model
+        self._view = view
+
+    def set_student_name(self, name: str):
+        self._model.name = name
+
+    def get_student_name(self) -> str:
+        return self._model.name
+
+    def set_student_grade(self, grade: str):
+        self._model.grade = grade
+
+    def update_view(self):
+        self._view.display_student_details(
+            self._model.name, self._model.id, self._model.grade
+        )
+
+if __name__ == "__main__":
+    record = Student("STU-99210", "Alice Vance", "A+")
+    ui_canvas = StudentView()
+    controller = StudentController(record, ui_canvas)
+
+    controller.update_view()
+    print("\n--- Modifying model parameters via controller intercepts ---")
+    controller.set_student_name("Alice Cooper")
+    controller.set_student_grade("A")
+    controller.update_view()

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Community Event Portal</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand text-uppercase fw-bold" href="#">CommUnity Portal</a>
+            <button class="navbar-expand-md navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="mainNavbar">
+                <div class="navbar-nav flex-column flex-md-row">
+                    <a class="nav-link active" href="#home">Home</a>
+                    <a class="nav-link" href="#events">Events</a>
+                    <a class="nav-link" href="#register">Register</a>
+                </div>
+                <form class="d-flex" role="search" id="searchForm">
+                    <input class="form-control me-2" type="search" id="searchInput" placeholder="Quick search by name..." aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5" id="home">
+        
+        <div id="welcomeBanner" class="p-5 mb-4 rounded-3 text-white position-relative shadow">
+            <h1 class="display-1 fw-bold text-capitalize">Welcome Resident!</h1>
+            <p class="lead text-muted-custom">Your centralized gateway to discover nearby local city council activities, workshops, and community updates.</p>
+            <span class="badge bg-danger position-absolute top-0 end-0 m-3 p-2 rounded-pill shadow-lg" id="offerBadge">Special Offer!</span>
+        </div>
+
+        <div class="row my-4 align-items-center">
+            <div class="col-md-6">
+                <label for="categoryFilter" class="form-label fw-bold">Filter Activities By Category:</label>
+                <select id="categoryFilter" class="form-select">
+                    <option value="all">All Available Categories</option>
+                    <option value="music">Music Festivals & Concerts</option>
+                    <option value="education">Educational Workshops & Baking</option>
+                </select>
+            </div>
+            <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                <button id="geoBtn" class="btn btn-primary btn-gradient shadow-sm">Find Nearby Events 📍</button>
+                <div id="geoOutput" class="small mt-2 text-muted fw-bold"></div>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <section id="events">
+            <h2 class="mb-4 text-center text-uppercase letter-spacing-md">Upcoming Community Events</h2>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4" id="eventGrid">
+                </div>
+        </section>
+
+        <hr class="my-5">
+
+        <section id="communityBulletin" class="my-5 p-4 border border-primary border-3 rounded shadow-sm">
+            <h3 class="mb-3 text-primary">City Council Bulletin</h3>
+            <div class="d-flex align-items-start mb-4 bg-light p-3 rounded">
+                <img src="https://picsum.photos/id/101/90/90" id="bulletinImg" class="rounded-circle me-3 border border-secondary p-1" alt="Mayor profile photo" title="Double click to enlarge">
+                <div>
+                    <h5 class="fw-bold m-0">Message from the Mayor</h5>
+                    <p class="text-muted small mb-2">Posted 2 days ago</p>
+                    <p class="mb-0 text-secondary">"Our goal remains making this neighborhood a safer, greener, and more cohesive space for every resident families."</p>
+                </div>
+            </div>
+            <div class="news-article text-justify">
+                <p>The upcoming seasons herald major green developments across our urban landscape. The local municipal board has passed financial provisions to establish four new pedestrian-only community parks, complete with open-air amphitheaters, sustainable rainwater management pathways, and high-efficiency low-impact localized solar arrays. Residents are invited to continuously submit logistical feedback directly to the public works office.</p>
+            </div>
+        </section>
+
+        <hr class="my-5">
+
+        <section id="register" class="bg-light p-4 p-md-5 rounded shadow">
+            <h2 class="mb-4">Secure Your Registration Ticket</h2>
+            <form id="registrationForm" novalidate>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="regName" placeholder="John Doe" required autofocus>
+                            <label for="regName">Full Legal Name</label>
+                            <div class="invalid-feedback">Your name is required.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            <input type="email" class="form-control" id="regEmail" placeholder="name@example.com" required>
+                            <label for="regEmail">Email Address</label>
+                            <div class="invalid-feedback">Provide a valid email address.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            <input type="tel" class="form-control" id="regPhone" placeholder="1234567890">
+                            <label for="regPhone">Phone Number</label>
+                            <div id="phoneFeedback" class="small mt-1"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            <select class="form-select" id="regEventSelect" required>
+                                <option value="" disabled selected>Choose from active lineup...</option>
+                                </select>
+                            <label for="regEventSelect">Target Event Choice</label>
+                        </div>
+                        <div id="feeDisplay" class="small mt-1 fw-bold text-success"></div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="regMessage" class="form-label fw-bold">Special Accessibility/Dietary Accommodations (<span id="charCount">0</span> characters)</label>
+                    <textarea class="form-control" id="regMessage" rows="3" placeholder="Let us know if you require wheelchair ramp routing or special seating arrangements..."></textarea>
+                </div>
+
+                <div class="mb-4 form-check">
+                    <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                    <label class="form-check-label" for="termsCheck">I agree to the code of conduct.</label>
+                </div>
+
+                <button type="submit" class="btn btn-dark w-100 py-3 shadow-lg rounded-pill text-uppercase fw-bold tracking-wide">Submit Portal Registration</button>
+                
+                <div class="mt-3 text-center">
+                    <button type="button" id="clearPrefBtn" class="btn btn-link text-decoration-none btn-sm text-danger">Clear System Cache Preferences</button>
+                </div>
+
+                <output id="formOutput" class="d-block mt-4 alert alert-success d-none text-center fw-bold"></output>
+            </form>
+        </section>
+
+        <hr class="my-5">
+
+        <section class="my-5 text-center">
+            <h4 class="mb-3">Watch Our Community Highlight Reel</h4>
+            <div class="ratio ratio-16x9 max-width-video mx-auto shadow rounded overflow-hidden">
+                <video id="promoVideo" controls poster="https://picsum.photos/id/106/800/450">
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    Your modern browser does not support playing integrated media assets.
+                </video>
+            </div>
+            <p id="videoStatus" class="mt-2 text-success small fw-bold"></p>
+        </section>
+
+        <section class="my-5">
+            <h3 class="text-center mb-4 text-muted">Premium Portal Services Tier Listing</h3>
+            <div class="table-responsive shadow-sm rounded">
+                <table class="table table-bordered align-middle text-center m-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Tier Level</th>
+                            <th>Monthly Fee</th>
+                            <th>Access Standard</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-bold">Standard Citizen</td>
+                            <td>Free of Charge</td>
+                            <td>Standard event entry tracking metrics.</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Community Stakeholder</td>
+                            <td>$15.00 / mo</td>
+                            <td>VIP priority seating setups & Early booking access windows.</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Municipal Corporate Sponsor</td>
+                            <td>$120.00 / mo</td>
+                            <td>Dedicated prominent brand presentation banners & Custom portal sub-stalls.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-4 mt-auto border-top border-secondary">
+        <div class="container">
+            <p class="m-0 small">&copy; 2026 City Council Portal. Built completely with semantic standards.</p>
+            <div class="mt-2 fs-5" id="socialLinks">
+                <span class="mx-2 role-icon" title="Facebook Icon">🌐 FB</span>
+                <span class="mx-2 role-icon" title="Twitter/X Icon">🐦 TW</span>
+                <span class="mx-2 role-icon" title="Instagram Icon">📸 IG</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

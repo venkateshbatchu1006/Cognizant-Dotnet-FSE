@@ -1,0 +1,38 @@
+from abc import ABC, abstractmethod
+
+class PaymentStrategy(ABC):
+    def pay(self, amount: float):
+        pass
+
+class CreditCardPayment(PaymentStrategy):
+    def __init__(self, card_number: str):
+        self.card_number = card_number
+
+    def pay(self, amount: float):
+        print(f"Paid ${amount} processing transaction with Credit Card: {self.card_number}")
+
+class PayPalPayment(PaymentStrategy):
+    def __init__(self, email: str):
+        self.email = email
+
+    def pay(self, amount: float):
+        print(f"Paid ${amount} using authenticated PayPal account: {self.email}")
+
+class PaymentContext:
+    def __init__(self):
+        self._strategy = None
+
+    def set_payment_strategy(self, strategy: PaymentStrategy):
+        self._strategy = strategy
+
+    def execute_payment(self, amount: float):
+        if self._strategy is None:
+            raise ValueError("Payment strategy execution context targets are undefined.")
+        self._strategy.pay(amount)
+
+if __name__ == "__main__":
+    checkout_cart = PaymentContext()
+    checkout_cart.set_payment_strategy(CreditCardPayment("1234-5678-9876-5432"))
+    checkout_cart.execute_payment(89.99)
+    checkout_cart.set_payment_strategy(PayPalPayment("user@example.com"))
+    checkout_cart.execute_payment(12.50)

@@ -1,0 +1,53 @@
+class Computer:
+    def __init__(self, builder):
+        self.CPU = builder.CPU
+        self.RAM = builder.RAM
+        self.storage = builder.storage
+        self.has_graphics_card = builder.has_graphics_card
+
+    def __str__(self):
+        return (f"Computer Specifications [CPU={self.CPU}, RAM={self.RAM}, "
+                f"Storage={self.storage}, Graphics Card={self.has_graphics_card}]")
+
+    class Builder:
+        def __init__(self):
+            self.CPU = None
+            self.RAM = None
+            self.storage = None
+            self.has_graphics_card = False
+
+        def set_CPU(self, CPU: str):
+            self.CPU = CPU
+            return self
+
+        def set_RAM(self, RAM: str):
+            self.RAM = RAM
+            return self
+
+        def set_storage(self, storage: str):
+            self.storage = storage
+            return self
+
+        def set_graphics_card(self, has_graphics_card: bool):
+            self.has_graphics_card = has_graphics_card
+            return self
+
+        def build(self) -> 'Computer':
+            return Computer(self)
+
+if __name__ == "__main__":
+    gaming_pc = Computer.Builder()\
+        .set_CPU("Intel i9")\
+        .set_RAM("32GB")\
+        .set_storage("2TB NVMe SSD")\
+        .set_graphics_card(True)\
+        .build()
+
+    office_pc = Computer.Builder()\
+        .set_CPU("Intel i5")\
+        .set_RAM("16GB")\
+        .set_storage("512GB SSD")\
+        .build()
+
+    print(gaming_pc)
+    print(office_pc)

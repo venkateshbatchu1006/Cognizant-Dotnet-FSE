@@ -1,0 +1,30 @@
+class Order:
+    def __init__(self, order_id: str, customer_name: str, total_price: float):
+        self.order_id = order_id
+        self.customer_name = customer_name
+        self.total_price = total_price
+
+class OrderSorter:
+    def bubble_sort(orders: list):
+        n = len(orders)
+        for i in range(n - 1):
+            for j in range(0, n - i - 1):
+                if orders[j].total_price > orders[j + 1].total_price:
+                    orders[j], orders[j + 1] = orders[j + 1], orders[j]
+
+    def quick_sort(cls, orders: list, low: int, high: int):
+        if low < high:
+            pivot_index = cls._partition(orders, low, high)
+            cls.quick_sort(orders, low, pivot_index - 1)
+            cls.quick_sort(orders, pivot_index + 1, high)
+
+    def _partition(orders: list, low: int, high: int) -> int:
+        pivot = orders[high].total_price
+        i = low - 1
+        for j in range(low, high):
+            if orders[j].total_price <= pivot:
+                i += 1
+                orders[i], orders[j] = orders[j], orders[i]
+        
+        orders[i + 1], orders[high] = orders[high], orders[i + 1]
+        return i + 1
